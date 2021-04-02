@@ -1,0 +1,12 @@
+-r requirements.txt
+
+pylint
+pylint-django
+
+pytest
+pytest-django
+
+coverage
+pytest-cov
+pytest-aiohttp
+pytest-mock

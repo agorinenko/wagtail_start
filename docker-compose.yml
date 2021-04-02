@@ -1,0 +1,37 @@
+version: '3.1'
+
+services:
+  nginx:
+    ports:
+      - 80:80
+    build:
+      context: ./etc/nginx/
+      dockerfile: Dockerfile
+      args:
+        - DOCKER_REGISTRY
+        - PIP_INDEX_URL
+        - PIP_TRUSTED_HOST
+    volumes:
+      - static_store:/opt/app/public
+    depends_on:
+      - web
+
+  web:
+    ports:
+      - 8000:8000
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - DOCKER_REGISTRY
+        - PIP_INDEX_URL
+        - PIP_TRUSTED_HOST
+    env_file:
+      - .env
+    command: ["web"]
+    volumes:
+      - static_store:/opt/app/public
+
+volumes:
+  static_store:
+  pg_store:
